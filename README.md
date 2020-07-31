@@ -31,11 +31,11 @@ Pipeline (using bwUniCluster)
 
 - training:
     - ncn/data.py (function get_bucketized_iterators)
-    - training.py (parateters: authors=false, for faster training maybe hidden_size=128 (default 2056), )
+    - training.py (parameters: authors=false, for faster training maybe hidden_size=128 (default 2056), )
         - creates train_losses, valid_losses, weights file NCN_.....pt
 ## Tips when working on bwUniCluster
 
 - `$ws_list` gives the location of your workspace(s)
 - `$scontrol show jobid _insert_id` gives the current status of your job
-- when running the python jobs `$python3 -u xyz.py` makes the StdOut Stream unbuffered, so you can have print statements which will print to the job's slurm_jobid.out file. Without `-u` you will not see these-
+- when running the python jobs `$python3 -u xyz.py` makes the StdOut Stream unbuffered, so you can have print statements which will print to the job's slurm_jobid.out file.
 - for more documentation see https://wiki.bwhpc.de/e/Main_Page
