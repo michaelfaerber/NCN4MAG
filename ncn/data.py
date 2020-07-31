@@ -55,9 +55,9 @@ def split_mag_data(path_to_data):
     data = pd.read_csv(mag_file, sep="\t")
     
     #split dataframe into train, valida, test
-    train=data.loc[data['year']<2017]
-    valid=data.loc[data['year']==2017]
-    test=data.loc[data['year']>2017]
+    train=data.loc[data['year']<2018]
+    valid=data.loc[data['year']==2018]
+    test=data.loc[data['year']>2018]
     
     #clean dataframe
     logger.info("preparing training samples...")
