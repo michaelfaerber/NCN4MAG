@@ -20,7 +20,7 @@ Pipeline (using bwUniCluster)
 
 ### jobs to run:
 
-- data preperation: (you can also execute all data.py functions in one job, but that takes more estimated time = more time before the job is accepted by the HPC Cluster)
+- data preparation: (you can also execute all data.py functions in one job, but that takes more estimated time = more time before the job is accepted by the HPC Cluster)
     - pandas_all.py (partition: gpu_8, 600g memory, 7 hours runtime) 
         - creates mag_all.txt
     - ncn/data.py (function get_mag_data) (partition: gpu_4, 200g memory, 1 hour runtime)
