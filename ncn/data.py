@@ -51,13 +51,13 @@ def get_mag_data(path_to_data):
 
 def split_mag_data(path_to_data):
     
-    mag_file = os.path.join(path_to_data, "mag_subset.txt")
+    mag_file = os.path.join(path_to_data, "mag_data.csv")
     data = pd.read_csv(mag_file, sep="\t")
     
     #split dataframe into train, valida, test
-    train=data.loc[data['year']<2018]
-    valid=data.loc[data['year']==2018]
-    test=data.loc[data['year']>2018]
+    train=data.loc[data['year']<2017]
+    valid=data.loc[data['year']==2017]
+    test=data.loc[data['year']>2017]
     
     #clean dataframe
     logger.info("preparing training samples...")
@@ -109,7 +109,7 @@ def prepare_mag_data(base_dir):
     tokenizer = Tokenizer(nlp.vocab)
     print("vocab loaded")
     #take samples with at least 10 words in citation context
-    for row in mag_df.itertuples():
+    for index, row in mag_df.iterrows():
         context = row['citationcontext']
         text = re.sub("[" + re.escape(string.punctuation) + "]", " ", context)
         text = [token.lemma_ for token in tokenizer(text) if not token.like_num]
@@ -120,7 +120,8 @@ def prepare_mag_data(base_dir):
         sample = {"context": context,
                   "authors_citing": row['citingauthors'],
                   "title_cited": row['citedtitle'],
-                  "authors_cited": row['citedauthors']}
+                  "authors_cited": row['citedauthors']
+                  }
         samples.append(pd.DataFrame(sample, index=[0]))
     print("processing done")
     logger.info("mag samples ready to load to file...")
@@ -331,6 +332,6 @@ if __name__ == '__main__':
     #base_dir = "/home/maria/input"
     base_dir = "/pfs/work7/workspace/scratch/ucgvm-input-0/input/"
     #get_mag_data(base_dir)
-    prepare_mag_data(base_dir)
-    #split_mag_data(base_dir)    
+    #prepare_mag_data(base_dir)
+    split_mag_data(base_dir)    
     #data = get_bucketized_iterators(base_dir)
