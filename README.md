@@ -25,12 +25,12 @@ Pipeline (using bwUniCluster)
         - creates mag_all.txt
     - ncn/data.py (function get_mag_data) (partition: gpu_4, 200g memory, 1 hour runtime)
         - creates mag_subset.txt
-    - ncn/data.py (function prepare_mag_data) (partition: gpu_4, 
-        - creates mag_data.csv
-    - ncn/data.py (function split mag_data) (partition_ gpu_4,
+    - ncn/data.py (function prepare_mag_data) (partition: gpu_4, 50g memory, 2 hour runtime)
+        - creates mag_data.csv (not used for training but for creating the title - author dicts used fr the webservice)
+    - ncn/data.py (function split mag_data) (partition_ gpu_4, 
+        - creates mag_train.csv, mag_valid.csv, mag_test.csv
 
 - training:
-    - ncn/data.py (function get_bucketized_iterators)
     - training.py (parameters: authors=false, for faster training maybe hidden_size=128 (default 2056), )
         - creates train_losses, valid_losses, weights file NCN_.....pt
 ## Tips when working on bwUniCluster
