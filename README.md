@@ -15,7 +15,8 @@ Pipeline (using bwUniCluster)
 1. clone this repository
 2. place dump in workspace (run `$ws_allocate _name 10` to create a new workspace with more than enough temporary storage for 10 days. Copy relevant files to your home directory)
 3. create virtualenvironment and install all dependencies from req.txt (`$pip3 install -r req.txt`)
-4. to run jobs, execute `$sbatch --partition=insert_node_here job.sh` after specifying the needed memory and the file to execute in job.sh (also change the path in job.sh to match your venv) 
+4. download nlp model: `python -m spacy download en_core_web_lg`
+5. to run each, execute `$sbatch --partition=insert_node_here job.sh` after specifying the needed memory and the file to execute in job.sh (also change the path in job.sh to match the created venv) 
 
 ### jobs to run:
 
