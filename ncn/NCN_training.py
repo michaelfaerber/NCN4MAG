@@ -1,6 +1,6 @@
-from ncn.model import *
-from ncn.training import *
-from ncn.data import *
+from model import *
+from training import *
+from data import *
 import pickle
 from datetime import datetime
 
