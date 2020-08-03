@@ -31,8 +31,13 @@ Pipeline (using bwUniCluster)
         - creates mag_train.csv, mag_valid.csv, mag_test.csv
 
 - training:
-    - training.py (parameters: authors=false, for faster training maybe hidden_size=128 (default 256), )
+    - training.py (parameters: authors=false, for faster training maybe hidden_size=128 (default: 256)
+        - bwUniCluster ressources on our dataset, running on gpu_4:
+            - CPU Utilized: 1-05:32:00
+            - Job Wall-clock time: 1-05:48:35 (30 hours)
+            - Memory Utilized: 19.01 GB
         - creates train_losses, valid_losses, weights file NCN_.....pt
+        
 ## Tips when working on bwUniCluster
 
 - `$ws_list` gives the location of your workspace(s)
