@@ -72,7 +72,11 @@ del contexts
 del papertoauthorname
 
 withallauthors=withallauthors.rename(columns={"displayname":"citingauthors"})
+
+print("remove duplicates")
+withallauthors=withallauthor.drop_duplicates(subset=["citingpaperid", "citationcontext", "paperreferenceid"])
 print("Step 5: put out")
+
 #final format:
 #"citingpaperid","year", "papertitle","paperreferenceid", "citationcontext", "citingauthors","citedtitle" "citedauthors"
 
