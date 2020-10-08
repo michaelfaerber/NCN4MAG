@@ -4,6 +4,9 @@
 
 Pipeline for training the Neural Citation Network (ncn) with the Microsoft academic graph (MAG) dataset.
 
+To setup the processing service, see https://github.com/sebastiancelis98/CitationRexApp
+This Repository is for the training part only.
+
 - input: MAG-dump (.tsv for each table in the MAG - tab seperated text files)
     - needed files: Papers (to get year), PaperAuthorAffiliations (to get authors), Authors (to get author names), Paperurls (to filter language), PaperFieldsOfStudy (to filter for CS papers), PaperCitationContexts (to get citations)
 
