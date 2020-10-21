@@ -30,7 +30,7 @@ print("paperurls are loaded")
 
 #inner join, to filter for english papers
 print("step 0")
-onlyenglishpapers=pd.merge(paperurls[paperurls.languagecode == "en"],papers, left_on="paperid", right_on="paperid")[["paperid", "year", "papertitle"]]
+onlyenglishpapers=pd.merge(paperurls[paperurls.languagecode == "en"],papers, left_on="paperid", right_on="paperid")[["paperid", "year", "papertitle", "citationcount"]]
 del paperurls
 del papers
 
@@ -39,34 +39,34 @@ print("fieldofstudy are loaded")
 
 #inner join, to filter for comp. science  papers (41008148 is the id of fieldofstudy computer science
 print("Step 1")
-onlyenglishcs=pd.merge(paperfieldsofstudy[paperfieldsofstudy.fieldofstudyid == 41008148],onlyenglishpapers, left_on="paperid", right_on="paperid")[["paperid", "year", "papertitle"]]
+onlyenglishcs=pd.merge(paperfieldsofstudy[paperfieldsofstudy.fieldofstudyid == 41008148],onlyenglishpapers, left_on="paperid", right_on="paperid")[["paperid", "year", "papertitle", "citationcount"]]
 
 del paperfieldsofstudy
 del onlyenglishpapers
 
-papercitationcontexts = pd.read_csv("/pfs/work7/workspace/scratch/utdkf-mag-0/nlp/PaperCitationContexts.txt", sep="\t", names=["citingpaperid", "paperreferenceid", "citationcontext"])
+papercitationcontexts = pd.read_csv("/pfs/work7/workspace/scratch/utdkf-mag-0/nlp/PaperCitationContexts.txt", sep="\t", names=["citingpaperid", "paperreferenceid", "citationcount"])
 print("citataioncontexts are loaded")
 
 print("Step 2")
 #papercitationscontexts is the data we want with metadata, add (cited) title here
-contexts1=pd.merge(onlyenglishcs, papercitationcontexts, left_on="paperid", right_on="paperreferenceid")[["citingpaperid", "paperreferenceid", "citationcontext", "papertitle"]]
+contexts1=pd.merge(onlyenglishcs, papercitationcontexts, left_on="paperid", right_on="paperreferenceid")[["citingpaperid", "paperreferenceid", "citationcontext", "papertitle", "citationcount"]]
 contexts1=contexts1.rename(columns={"papertitle":"citedtitle"})
 del papercitationcontexts
 
 #add citing title (as papertitle) and year of citing paper (as year)
-contexts=pd.merge(onlyenglishcs, contexts1, left_on="paperid", right_on="citingpaperid")[["citingpaperid","year", "paperreferenceid", "citationcontext", "papertitle", "citedtitle"]]
+contexts=pd.merge(onlyenglishcs, contexts1, left_on="paperid", right_on="citingpaperid")[["citingpaperid","year", "paperreferenceid", "citationcontext", "papertitle", "citedtitle", "citationcount"]]
 del onlyenglishcs
 del contexts1
 
 
 print("Step 3")
 #add cited authors
-withcitedauthors = pd.merge(contexts, papertoauthorname, left_on="paperreferenceid", right_on="paperid")[["citingpaperid","year",  "papertitle","paperreferenceid", "citationcontext", "displayname", "citedtitle"]]
+withcitedauthors = pd.merge(contexts, papertoauthorname, left_on="paperreferenceid", right_on="paperid")[["citingpaperid","year",  "papertitle","paperreferenceid", "citationcontext", "displayname", "citedtitle", "citationcount"]]
 withcitedauthors = withcitedauthors.rename(columns={"displayname":"citedauthors"})
 
 print("step 4")
 #add citing authors
-withallauthors = pd.merge(withcitedauthors, papertoauthorname, left_on="citingpaperid", right_on="paperid")[["citingpaperid","year", "papertitle","paperreferenceid", "citationcontext", "displayname","citedtitle", "citedauthors"]]
+withallauthors = pd.merge(withcitedauthors, papertoauthorname, left_on="citingpaperid", right_on="paperid")[["citingpaperid","year", "papertitle","paperreferenceid", "citationcontext", "displayname","citedtitle", "citedauthors", "citationcount"]]
 del withcitedauthors
 del contexts
 del papertoauthorname
@@ -74,11 +74,12 @@ del papertoauthorname
 withallauthors=withallauthors.rename(columns={"displayname":"citingauthors"})
 
 print("remove duplicates")
-withallauthors=withallauthor.drop_duplicates(subset=["citingpaperid", "citationcontext", "paperreferenceid"])
+withallauthors=withallauthors.drop_duplicates(subset=["citingpaperid", "citationcontext", "paperreferenceid"])
+
 print("Step 5: put out")
 
 #final format:
-#"citingpaperid","year", "papertitle","paperreferenceid", "citationcontext", "citingauthors","citedtitle" "citedauthors"
+#"citingpaperid","year", "papertitle","paperreferenceid", "citationcontext", "citingauthors","citedtitle", "citedauthors"
 
 
 #tab seperated, because authors are comma seperated
