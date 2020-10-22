@@ -44,7 +44,7 @@ onlyenglishcs=pd.merge(paperfieldsofstudy[paperfieldsofstudy.fieldofstudyid == 4
 del paperfieldsofstudy
 del onlyenglishpapers
 
-papercitationcontexts = pd.read_csv("/pfs/work7/workspace/scratch/utdkf-mag-0/nlp/PaperCitationContexts.txt", sep="\t", names=["citingpaperid", "paperreferenceid", "citationcount"])
+papercitationcontexts = pd.read_csv("/pfs/work7/workspace/scratch/utdkf-mag-0/nlp/PaperCitationContexts.txt", sep="\t", names=["citingpaperid", "paperreferenceid"])
 print("citataioncontexts are loaded")
 
 print("Step 2")
