@@ -12,7 +12,7 @@ path_PaperFieldsofStudy = "/pfs/work7/workspace/scratch/utdkf-mag-0/advanced/Pap
 path_PaperCitationContexts = "/pfs/work7/workspace/scratch/utdkf-mag-0/nlp/PaperCitationContexts.txt"
 
 path_output_file = '/pfs/work7/workspace/scratch/ucgvm-input-0/input/mag_all_pandas_tsv.txt'
-
+lower_bound_citationcount = 10
 
 print("starting")
 
@@ -62,24 +62,26 @@ print("Step 2")
 #trying to fix the Type Error here:
 papercitationcontexts.paperreferenceid.astype(int)
 onlyenglishcs.paperid.astype(int)
-contexts1=pd.merge(onlyenglishcs, papercitationcontexts, left_on="paperid", right_on="paperreferenceid")[["citingpaperid", "paperreferenceid", "citationcontext", "papertitle"]]
+onlyenglishcs.citataioncount.astype(int)
+#filter for citationcount of cited paper & add cited title
+contexts1=pd.merge(onlyenglishcs[onlyenglishcs.citationcount >= lower_bound_citationcount], papercitationcontexts, left_on="paperid", right_on="paperreferenceid")[["citingpaperid", "paperreferenceid", "citationcontext", "papertitle"]]
 contexts1=contexts1.rename(columns={"papertitle":"citedtitle"})
 del papercitationcontexts
 
 #add citing title (as papertitle) and year of citing paper (as year)
-contexts=pd.merge(onlyenglishcs, contexts1, left_on="paperid", right_on="citingpaperid")[["citingpaperid","year", "paperreferenceid", "citationcontext", "papertitle", "citedtitle", "citationcount"]]
+contexts=pd.merge(onlyenglishcs, contexts1, left_on="paperid", right_on="citingpaperid")[["citingpaperid","year", "paperreferenceid", "citationcontext", "papertitle", "citedtitle"]]
 del onlyenglishcs
 del contexts1
 
 
 print("Step 3")
 #add cited authors
-withcitedauthors = pd.merge(contexts, papertoauthorname, left_on="paperreferenceid", right_on="paperid")[["citingpaperid","year",  "papertitle","paperreferenceid", "citationcontext", "displayname", "citedtitle", "citationcount"]]
+withcitedauthors = pd.merge(contexts, papertoauthorname, left_on="paperreferenceid", right_on="paperid")[["citingpaperid","year",  "papertitle","paperreferenceid", "citationcontext", "displayname", "citedtitle"]]
 withcitedauthors = withcitedauthors.rename(columns={"displayname":"citedauthors"})
 
 print("step 4")
 #add citing authors
-withallauthors = pd.merge(withcitedauthors, papertoauthorname, left_on="citingpaperid", right_on="paperid")[["citingpaperid","year", "papertitle","paperreferenceid", "citationcontext", "displayname","citedtitle", "citedauthors", "citationcount"]]
+withallauthors = pd.merge(withcitedauthors, papertoauthorname, left_on="citingpaperid", right_on="paperid")[["citingpaperid","year", "papertitle","paperreferenceid", "citationcontext", "displayname","citedtitle", "citedauthors"]]
 del withcitedauthors
 del contexts
 del papertoauthorname
