@@ -3,12 +3,12 @@ import pandas as pd
 
 #this program creates the mag_all.txt file, which is zsed to perform machine learning on the sitation data of the mag.
 #input: tsv mag dump:
-path_PaperAuthorAffilion = "/pfs/work7/workspace/scratch/utdkf-mag-0/mag/PaperAuthorAffiliations.txt"
-path_Authors = "/pfs/work7/workspace/scratch/utdkf-mag-0/mag/Authors.txt"
-path_Papers = "/pfs/work7/workspace/scratch/utdkf-mag-0/mag/Papers.txt"
-path_PaperUrls = "/pfs/work7/workspace/scratch/utdkf-mag-0/mag/PaperUrls.txt"
-path_PaperFieldsofStudy = "/pfs/work7/workspace/scratch/utdkf-mag-0/advanced/PaperFieldsOfStudy.txt"
-path_PaperCitationContexts = "/pfs/work7/workspace/scratch/utdkf-mag-0/nlp/PaperCitationContexts.txt"
+path_PaperAuthorAffilion = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag-2020-10-15/PaperAuthorAffiliations.txt"
+path_Authors = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag-2020-10-15/Authors.txt"
+path_Papers = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag-2020-10-15/Papers.txt"
+path_PaperUrls = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag-2020-10-15/PaperUrls.txt"
+path_PaperFieldsofStudy = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag-2020-10-15/PaperFieldsOfStudy.txt"
+path_PaperCitationContexts = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag-2020-10-15/PaperCitationContexts.txt"
 
 #path where to write the compiled information
 path_output_file = '/pfs/work7/workspace/scratch/ucgvm-input-0/input/mag_all_pandas_tsv.txt'
@@ -90,6 +90,7 @@ del papertoauthorname
 withallauthors=withallauthors.rename(columns={"displayname":"citingauthors"})
 
 print("remove duplicates")
+#unique entries are defined by 1) citingpaper id, 2) citationcontext 3) paperreference id  - that way only real duplicates are eliminated (no idea where duplicates come from but there are many wihtout this line)
 withallauthors=withallauthors.drop_duplicates(subset=["citingpaperid", "citationcontext", "paperreferenceid"])
 
 print("Step 5: put out")
