@@ -49,6 +49,9 @@ print("citataioncontexts are loaded")
 
 print("Step 2")
 #papercitationscontexts is the data we want with metadata, add (cited) title here
+#trying to fix the Type Error here:
+papercitationcontexts.paperreferenceid.astype(int)
+onlyenglishcs.paperid.astype(int)
 contexts1=pd.merge(onlyenglishcs, papercitationcontexts, left_on="paperid", right_on="paperreferenceid")[["citingpaperid", "paperreferenceid", "citationcontext", "papertitle"]]
 contexts1=contexts1.rename(columns={"papertitle":"citedtitle"})
 del papercitationcontexts
