@@ -63,7 +63,7 @@ print("Step 2")
 #trying to fix the Type Error here:
 papercitationcontexts.paperreferenceid.astype(int)
 onlyenglishcs.paperid.astype(int)
-onlyenglishcs.citataioncount.astype(int)
+onlyenglishcs.citationcount.astype(int)
 #filter for citationcount of cited paper & add cited title
 contexts1=pd.merge(onlyenglishcs[onlyenglishcs.citationcount >= lower_bound_citationcount], papercitationcontexts, left_on="paperid", right_on="paperreferenceid")[["citingpaperid", "paperreferenceid", "citationcontext", "papertitle"]]
 contexts1=contexts1.rename(columns={"papertitle":"citedtitle"})
