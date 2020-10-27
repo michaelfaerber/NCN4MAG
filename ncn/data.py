@@ -120,7 +120,8 @@ def prepare_mag_data(base_dir):
         sample = {"context": context,
                   "authors_citing": row['citingauthors'],
                   "title_cited": row['citedtitle'],
-                  "authors_cited": row['citedauthors']
+                  "authors_cited": row['citedauthors'],
+                  "year": row['year']
                   }
         samples.append(pd.DataFrame(sample, index=[0]))
     print("processing done")
@@ -330,8 +331,9 @@ def get_bucketized_iterators(path_to_data: PathOrStr, batch_size: int = 16,
     
 if __name__ == '__main__':
     #base_dir = "/home/maria/input"
-    base_dir = "/pfs/work7/workspace/scratch/ucgvm-input-0/input/"
+    #base_dir = "/pfs/work7/workspace/scratch/ucgvm-input-0/input/"
+    
     #get_mag_data(base_dir)
-    #prepare_mag_data(base_dir)
+    prepare_mag_data(base_dir)
     split_mag_data(base_dir)    
     #data = get_bucketized_iterators(base_dir)
