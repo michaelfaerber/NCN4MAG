@@ -11,7 +11,7 @@ path_PaperFieldsofStudy = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag
 path_PaperCitationContexts = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag-2020-10-15/PaperCitationContexts.txt"
 
 #path where to write the compiled information
-path_output_file = '/pfs/work7/workspace/scratch/ucgvm-input-0/input/mag_all_pandas_tsv.txt'
+path_output_file = '/pfs/work7/workspace/scratch/ucgvm-input-0/input/new_mag_all_pandas_tsv.txt'
 #inclusive bound
 lower_bound_citationcount = 10
 
@@ -33,7 +33,7 @@ del papertoauthorname1
 
 
 print("loading papers")
-papers = pd.read_csv(path_Papers, sep="\t", names=["paperid", "rank", "doi", "doctype", "papertitle", "originaltitle", "booktitle", "year", "date", "onlinedate", "publisher", "journalid", "conferenceseriesid", "conferenceseriesinstanceid", "attribute name", "attribute name2", "volume", "issue", "firstpage", "lastpage", "referencecount", "citationcount", "estimatedcitation", "originalvenue", "familyid", "createddate", "paperid2", "indexedabstract"])
+papers = pd.read_csv(path_Papers, sep="\t", names=["paperid", "rank", "doi", "doctype", "papertitle", "originaltitle", "booktitle", "year", "date", "onlinedate", "publisher", "journalid", "conferenceseriesid", "conferenceseriesinstanceid", "volume", "issue", "firstpage", "lastpage", "referencecount", "citationcount", "estimatedcitation", "originalvenue", "familyid", "familyrank", "createdDate"])
 print("papers are loaded")
 
 paperurls = pd.read_csv(path_PaperUrls, sep="\t", names=["paperid", "sourcetype", "sourceurl", "languagecode" ])
