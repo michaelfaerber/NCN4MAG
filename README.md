@@ -2,7 +2,7 @@
 
 ## Description
 
-Pipeline for training the Neural Citation Network (ncn) with the Microsoft academic graph (MAG) dataset.
+Pipeline for training the Neural Citation Network (NCN) with the Microsoft Academic Graph (MAG) dataset.
 
 To setup the processing service, see https://github.com/sebastiancelis98/CitationRexApp
 This Repository is for the training part only.
