@@ -1,4 +1,4 @@
-# NCN4MAG
+# NCN4MAG: Deploying the Neural Citation Network (NCN) on the Microsoft Academic Graph (MAG)
 
 ## Description
 
@@ -12,7 +12,7 @@ This Repository is for the training part only.
 
 - output: weights for the model
 
-## how to run it:
+## How to run it:
 
 Pipeline (using bwUniCluster)
 1. clone this repository
@@ -21,7 +21,7 @@ Pipeline (using bwUniCluster)
 4. download nlp model: `python -m spacy download en_core_web_lg`
 5. to run each, execute `$sbatch --partition=insert_node_here job.sh` after specifying the needed memory and the file to execute in job.sh (also change the path in job.sh to match the created venv) 
 
-### jobs to run:
+### Jobs to run:
 
 - data preparation: (you can also execute all data.py functions in one job, but that takes more estimated time = more time before the job is accepted by the HPC Cluster)
     - pandas_all.py (partition: gpu_8, 600g memory, 7 hours runtime) 
