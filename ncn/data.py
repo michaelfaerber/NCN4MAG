@@ -55,9 +55,9 @@ def split_mag_data(path_to_data):
     data = pd.read_csv(mag_file, sep="\t")
     
     #split dataframe into train, valida, test
-    train=data.loc[data['year']<2017]
-    valid=data.loc[data['year']==2017]
-    test=data.loc[data['year']>2017]
+    train=data.loc[data['year']<2019]
+    valid=data.loc[data['year']==2019]
+    test=data.loc[data['year']>2019]
     
     #clean dataframe
     logger.info("preparing training samples...")
@@ -87,9 +87,9 @@ def clean_mag_data(dataframe, save_path):
             continue
         # generate sample in correct format
         sample = {"context": context,
-                  "authors_citing": row['citingauthors'],
-                  "title_cited": row['citedtitle'],
-                  "authors_cited": row['citedauthors']}
+                  "authors_citing": row['authors_citing'],
+                  "title_cited": row['title_cited'],
+                  "authors_cited": row['authors_cited']}
         samples.append(pd.DataFrame(sample, index=[0]))
     
     logger.info("mag samples ready to load to file...")
@@ -331,9 +331,9 @@ def get_bucketized_iterators(path_to_data: PathOrStr, batch_size: int = 16,
     
 if __name__ == '__main__':
     #base_dir = "/home/maria/input"
-    #base_dir = "/pfs/work7/workspace/scratch/ucgvm-input-0/input/"
+    base_dir = "/pfs/work7/workspace/scratch/ucgvm-input-0/input/"
     
-    #get_mag_data(base_dir)
+    get_mag_data(base_dir)
     prepare_mag_data(base_dir)
     split_mag_data(base_dir)    
     #data = get_bucketized_iterators(base_dir)

@@ -10,6 +10,7 @@ path_PaperUrls = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag-2020-10-
 path_PaperFieldsofStudy = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag-2020-10-15/PaperFieldsOfStudy.txt"
 path_PaperCitationContexts = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag-2020-10-15/PaperCitationContexts.txt"
 
+path_PCount = "/pfs/work7/workspace/scratch/ucgvm-input-0/newmag/mag-2020-10-15/Papers+Counts.txt"
 #path where to write the compiled information
 path_output_file = '/pfs/work7/workspace/scratch/ucgvm-input-0/input/new_mag_all_pandas_tsv.txt'
 #inclusive bound
@@ -41,7 +42,7 @@ print("paperurls are loaded")
 
 #inner join, to filter for english papers
 print("step 0")
-onlyenglishpapers=pd.merge(paperurls[paperurls.languagecode == "en"],papers, left_on="paperid", right_on="paperid")[["paperid", "year", "papertitle", "citationcount"]]
+onlyenglishpapers=pd.merge(paperurls[paperurls.languagecode == "en"],papers, left_on="paperid", right_on="paperid")[["paperid", "year", "papertitle"]]
 del paperurls
 del papers
 
@@ -50,7 +51,7 @@ print("fieldofstudy are loaded")
 
 #inner join, to filter for comp. science  papers (41008148 is the id of fieldofstudy computer science
 print("Step 1")
-onlyenglishcs=pd.merge(paperfieldsofstudy[paperfieldsofstudy.fieldofstudyid == 41008148],onlyenglishpapers, left_on="paperid", right_on="paperid")[["paperid", "year", "papertitle", "citationcount"]]
+onlyenglishcs=pd.merge(paperfieldsofstudy[paperfieldsofstudy.fieldofstudyid == 41008148],onlyenglishpapers, left_on="paperid", right_on="paperid")[["paperid", "year", "papertitle"]]
 
 del paperfieldsofstudy
 del onlyenglishpapers
@@ -63,16 +64,24 @@ print("Step 2")
 #trying to fix the Type Error here:
 papercitationcontexts.paperreferenceid.astype(int)
 onlyenglishcs.paperid.astype(int)
-onlyenglishcs.citationcount.astype(int)
+
+
+pc = pd.read_csv(path_PCount, sep="\t", names=["paperid", "citationcount"])
+enough = pc[pc.citationcount >= lower_bound_citationcount]
+
 #filter for citationcount of cited paper & add cited title
-contexts1=pd.merge(onlyenglishcs[onlyenglishcs.citationcount >= lower_bound_citationcount], papercitationcontexts, left_on="paperid", right_on="paperreferenceid")[["citingpaperid", "paperreferenceid", "citationcontext", "papertitle"]]
+contexts1=pd.merge(onlyenglishcs, papercitationcontexts, left_on="paperid", right_on="paperreferenceid")[["citingpaperid", "paperreferenceid", "citationcontext", "papertitle"]]
 contexts1=contexts1.rename(columns={"papertitle":"citedtitle"})
+
+contexts1=pd.merge(enough, contexts1, left_on="paperid", right_on="paperreferenceid")[["citingpaperid", "paperreferenceid", "citationcontext", "citedtitle"]]
 del papercitationcontexts
 
 #add citing title (as papertitle) and year of citing paper (as year)
 contexts=pd.merge(onlyenglishcs, contexts1, left_on="paperid", right_on="citingpaperid")[["citingpaperid","year", "paperreferenceid", "citationcontext", "papertitle", "citedtitle"]]
 del onlyenglishcs
 del contexts1
+del enough
+del pc
 
 
 print("Step 3")
