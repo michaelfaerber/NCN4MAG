@@ -276,7 +276,7 @@ def get_datasets(path_to_data: PathOrStr,
     logger.info("Loading datasets...")
     train, valid, test = TabularDataset.splits(path=path_to_data, train='mag_train.csv',
                                     validation='mag_valid.csv', test='mag_test.csv', 
-                                    format='csv',
+                                    format='tsv',
                                     fields=[("context", CNTXT), ("authors_citing", AUT), ("title_cited", TTL), ("authors_cited", AUT)],
                                     skip_header=True)
 
@@ -333,7 +333,7 @@ if __name__ == '__main__':
     #base_dir = "/home/maria/input"
     base_dir = "/pfs/work7/workspace/scratch/ucgvm-input-0/input/"
     
-    get_mag_data(base_dir)
+    #get_mag_data(base_dir)
     prepare_mag_data(base_dir)
     split_mag_data(base_dir)    
     #data = get_bucketized_iterators(base_dir)
