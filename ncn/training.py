@@ -14,10 +14,10 @@ import torch.nn.init as init
 from torch.utils.tensorboard import SummaryWriter
 from torchtext.data import BucketIterator
 
-import ncn.core
-from ncn.core import DEVICE, SEED, PathOrStr
-from ncn.data import get_bucketized_iterators
-from ncn.model import NeuralCitationNetwork
+import core
+from core import DEVICE, SEED, PathOrStr
+from data import get_bucketized_iterators
+from model import NeuralCitationNetwork
 
 logger = logging.getLogger(__name__)
 

@@ -12,9 +12,9 @@ import torch.nn.functional as F
 from gensim.summarization.bm25 import BM25
 from torchtext.data import TabularDataset
 
-import ncn.core
-from ncn.core import BaseData, Stringlike, PathOrStr, DEVICE, Filters
-from ncn.model import NeuralCitationNetwork
+import core
+from core import BaseData, Stringlike, PathOrStr, DEVICE, Filters
+from model import NeuralCitationNetwork
 
 logger = logging.getLogger(__name__)
 

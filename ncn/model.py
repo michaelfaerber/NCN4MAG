@@ -7,8 +7,8 @@ from torch import nn
 import torch.nn.functional as F
 from torch import Tensor
 
-import ncn.core
-from ncn.core import Filters, DEVICE
+import core
+from core import Filters, DEVICE
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
